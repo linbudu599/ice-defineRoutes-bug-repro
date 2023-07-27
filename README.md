@@ -9,7 +9,7 @@
 
 通过 `router.defineRoutes`，将 `/src/pages/generated/index/index.tsx` 作为 根路径，同时 `src/pages/layout.tsx` 在此页面生效。
 
-- 尝试1：直接调整路由
+- 尝试 1：直接调整路由
 
 ```typescript
 import { defineConfig } from "@ice/app";
@@ -23,7 +23,6 @@ export default defineConfig(() => ({
     },
   },
 }));
-
 ```
 
 表现：
@@ -40,9 +39,7 @@ export default defineConfig(() => ({
     "file": "layout.tsx",
     "componentName": "layout",
     "layout": true,
-    "exports": [
-      "default"
-    ],
+    "exports": ["default"],
     "children": [
       {
         "path": "generated",
@@ -52,9 +49,7 @@ export default defineConfig(() => ({
         "file": "generated/index/index.tsx",
         "componentName": "generated-index-index",
         "layout": false,
-        "exports": [
-          "default"
-        ]
+        "exports": ["default"]
       }
     ]
   },
@@ -64,18 +59,14 @@ export default defineConfig(() => ({
     "file": "generated/index/index.tsx",
     "componentName": "generated-index-index",
     "layout": false,
-    "exports": [
-      "default"
-    ]
+    "exports": ["default"]
   }
 ]
 ```
 
 疑似原因：优先匹配了第一项 layout ？没有匹配到下一个动态配置过的路由？
 
-
-
-- 尝试2：在定义路由时将其定义在 layotu 内：
+- 尝试 2：在定义路由时将其定义在 layotu 内：
 
 ```typescript
 import { defineConfig } from "@ice/app";
@@ -91,14 +82,11 @@ export default defineConfig(() => ({
     },
   },
 }));
-
 ```
 
 类似于尝试 1，仅有 layout 组件生效。
 
-
-
-- 尝试3：调整到非根路径：
+- 尝试 3：调整到非根路径：
 
 ```typescript
 import { defineConfig } from "@ice/app";
@@ -111,11 +99,41 @@ export default defineConfig(() => ({
     },
   },
 }));
-
 ```
 
 - 可在 `/gen` 匹配到预期的组件
 - 全局 layout 不生效
 
+生成的 route-manifest.json
 
-
+```json
+[
+  {
+    "id": "layout",
+    "file": "layout.tsx",
+    "componentName": "layout",
+    "layout": true,
+    "exports": ["default"],
+    "children": [
+      {
+        "path": "generated",
+        "index": true,
+        "id": "generated",
+        "parentId": "layout",
+        "file": "generated/index/index.tsx",
+        "componentName": "generated-index-index",
+        "layout": false,
+        "exports": ["default"]
+      }
+    ]
+  },
+  {
+    "path": "/gen",
+    "id": "/gen",
+    "file": "generated/index/index.tsx",
+    "componentName": "generated-index-index",
+    "layout": false,
+    "exports": ["default"]
+  }
+]
+```
