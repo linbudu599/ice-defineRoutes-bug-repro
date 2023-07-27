@@ -1,0 +1,58 @@
+:root {
+  --primary: #3178f6;
+  --bg-primary: white;
+}
+/* --- Layout Style Start--- */
+.layout-container {
+  display: flex;
+  padding: 12px 16px;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 800px;
+}
+
+/* ----- Sidebar Style Start ----- */
+.sidebar-container {
+  border: 1px solid black;
+  padding: 12px 16px;
+  margin-right: 24px;
+  width: 350px;
+  height: 100%;
+}
+
+.sidebar-link {
+  text-decoration: none;
+  color: #333;
+
+  &:hover {
+    color: var(--primary);
+    cursor: pointer;
+  }
+}
+
+.sidebar-link-container {
+  .sidebar-link-container {
+    margin-left: 16px;
+  }
+
+  .sidebar-link-active {
+    text-decoration: underline;
+    color: var(--primary);
+  }
+}
+
+/* ----- Sidebar Style End ----- */
+
+/* ----- Outlet Style Start ----- */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 75%;
+
+  .outlet-container {
+  }
+}
+/* ----- Outlet Style End ----- */
+
+/* --- Layout Style End--- */
